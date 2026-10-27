@@ -1,0 +1,17 @@
+{
+"type": "FeatureCollection",
+"name": "localidades",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "MUN": "Teófilo Otoni", "UF": "MG", "TIPO": "Cidade", "NOME": "Teófilo Otoni", "FONTE": "Base de localidades do IBGE (2010)" }, "geometry": { "type": "Point", "coordinates": [ -41.509635165789597, -17.862539808013796 ] } },
+{ "type": "Feature", "properties": { "MUN": "Teófilo Otoni", "UF": "MG", "TIPO": "Povoado", "NOME": "Poton", "FONTE": "Base de localidades do IBGE (2010)" }, "geometry": { "type": "Point", "coordinates": [ -41.471814332785684, -17.924279897803622 ] } },
+{ "type": "Feature", "properties": { "MUN": "Teófilo Otoni", "UF": "MG", "TIPO": "Povoado", "NOME": "Lajinha", "FONTE": "Base de localidades do IBGE (2010)" }, "geometry": { "type": "Point", "coordinates": [ -41.536746086824898, -17.96461409243258 ] } },
+{ "type": "Feature", "properties": { "MUN": "Teófilo Otoni", "UF": "MG", "TIPO": "Vila", "NOME": "Crispim Jacques", "FONTE": "Base de localidades do IBGE (2010)" }, "geometry": { "type": "Point", "coordinates": [ -41.14303155749969, -17.828548778129939 ] } },
+{ "type": "Feature", "properties": { "MUN": "Teófilo Otoni", "UF": "MG", "TIPO": "Povoado", "NOME": "Brejão", "FONTE": "Base de localidades do IBGE (2010)" }, "geometry": { "type": "Point", "coordinates": [ -41.235696401026722, -17.781038591998428 ] } },
+{ "type": "Feature", "properties": { "MUN": "Teófilo Otoni", "UF": "MG", "TIPO": "Vila", "NOME": "Pedro Versiani", "FONTE": "Base de localidades do IBGE (2010)" }, "geometry": { "type": "Point", "coordinates": [ -41.312401467569373, -17.882205736229846 ] } },
+{ "type": "Feature", "properties": { "MUN": "Teófilo Otoni", "UF": "MG", "TIPO": "Vila", "NOME": "Topázio", "FONTE": "Base de localidades do IBGE (2010)" }, "geometry": { "type": "Point", "coordinates": [ -41.382844208612404, -17.64252840391832 ] } },
+{ "type": "Feature", "properties": { "MUN": "Teófilo Otoni", "UF": "MG", "TIPO": "Povoado", "NOME": "Maravilha", "FONTE": "Base de localidades do IBGE (2010)" }, "geometry": { "type": "Point", "coordinates": [ -41.100008381126543, -17.562119583567601 ] } },
+{ "type": "Feature", "properties": { "MUN": "Teófilo Otoni", "UF": "MG", "TIPO": "Vila", "NOME": "Mucuri", "FONTE": "Base de localidades do IBGE (2010)" }, "geometry": { "type": "Point", "coordinates": [ -41.494044448821619, -17.599223692718763 ] } },
+{ "type": "Feature", "properties": { "MUN": "Teófilo Otoni", "UF": "MG", "TIPO": "Vila", "NOME": "Rio Pretinho", "FONTE": "Base de localidades do IBGE (2010)" }, "geometry": { "type": "Point", "coordinates": [ -41.352424773404415, -17.355667705930276 ] } }
+]
+}

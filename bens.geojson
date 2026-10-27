@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "bens",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id_bem": 20437, "identifica": "S?o Juli?o I", "co_iphan": "MG3113701BAST00004", "no_logrado": "Sem localidade", "nu_logrado": null, "id_naturez": 3, "ds_naturez": "Bem Arqueol?gico", "codigo_iph": "BA", "id_classif": 286, "ds_classif": "Sem classifica??o", "id_tipo_be": 4, "ds_tipo_be": "S?tio", "sg_tipo_be": "ST", "sintese_be": null, "dt_cadastr": "2019-05-10" }, "geometry": { "type": "Point", "coordinates": [ -41.053783, -17.606488 ] } },
+{ "type": "Feature", "properties": { "id_bem": 20438, "identifica": "Sequeir?o", "co_iphan": "MG3113701BAST00005", "no_logrado": "Sem localidade", "nu_logrado": null, "id_naturez": 3, "ds_naturez": "Bem Arqueol?gico", "codigo_iph": "BA", "id_classif": 286, "ds_classif": "Sem classifica??o", "id_tipo_be": 4, "ds_tipo_be": "S?tio", "sg_tipo_be": "ST", "sintese_be": null, "dt_cadastr": "2019-05-10" }, "geometry": { "type": "Point", "coordinates": [ -41.050765, -17.597006 ] } },
+{ "type": "Feature", "properties": { "id_bem": 51846, "identifica": "Quilombo Urbano Margem da Linha", "co_iphan": "MG3168606BISQ00001", "no_logrado": "Rua J?lio Costa", "nu_logrado": "61", "id_naturez": 2, "ds_naturez": "Bem Im?vel", "codigo_iph": "BI", "id_classif": 309, "ds_classif": "Sem classifica??o", "id_tipo_be": 13, "ds_tipo_be": "S?tio detentor de reminisc?ncias hist?ricas dos antigos quilombos", "sg_tipo_be": "SQ", "sintese_be": "Quilombo Urbano Margem da Linha, tamb?m conhecido(a) como Quilombo Margem da Linha, localizado(a) no estado de Minas Gerais, cidade(s) de Te?filo Otoni, ? um Bem Im?vel, do tipo S?tio detentor de reminisc?ncias hist?ricas dos antigos quilombos.", "dt_cadastr": "2025-02-05" }, "geometry": { "type": "Point", "coordinates": [ -41.515152, -17.867541 ] } }
+]
+}

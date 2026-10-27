@@ -1,0 +1,14 @@
+{
+"type": "FeatureCollection",
+"name": "hospitais SUS",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Nome Fanta": "HOSPITAL BOM SAMARITANO", "Natureza J": "FILANTROPICO", "Tipo de Un": "HOSPITAL GERAL", "Tipo de Ge": "M", "CNES": "2184834", "Competênc": null }, "geometry": { "type": "Point", "coordinates": [ -41.498688046025983, -17.869977848470079 ] } },
+{ "type": "Feature", "properties": { "Nome Fanta": "HOSPITAL SANTA ROSALIA", "Natureza J": "FILANTROPICO", "Tipo de Un": "HOSPITAL GERAL", "Tipo de Ge": "M", "CNES": "2208172", "Competênc": null }, "geometry": { "type": "Point", "coordinates": [ -41.50694302273596, -17.861901366627862 ] } },
+{ "type": "Feature", "properties": { "Nome Fanta": "HOSPITAL PHILADELFIA", "Natureza J": "FILANTROPICO", "Tipo de Un": "HOSPITAL GERAL", "Tipo de Ge": "M", "CNES": "2210924", "Competênc": null }, "geometry": { "type": "Point", "coordinates": [ -41.5076889, -17.8767196 ] } },
+{ "type": "Feature", "properties": { "Nome Fanta": "HOSPITAL MUNICIPAL DR RAIMUNDO GOBIRA", "Natureza J": "PUBLICO", "Tipo de Un": "HOSPITAL GERAL", "Tipo de Ge": "M", "CNES": "2211254", "Competênc": null }, "geometry": { "type": "Point", "coordinates": [ -41.513036367938987, -17.869532027488059 ] } },
+{ "type": "Feature", "properties": { "Nome Fanta": "UNIHEALTH PRONTO ATENDIMENTO E HOSPITAL TRES VALES", "Natureza J": "FILANTROPICO", "Tipo de Un": "HOSPITAL GERAL", "Tipo de Ge": "M", "CNES": "7712170", "Competênc": null }, "geometry": { "type": "Point", "coordinates": [ -41.484456659412871, -17.866977837513023 ] } },
+{ "type": "Feature", "properties": { "Nome Fanta": "HOSPITAL REGIONAL DE TEOFILO OTONI", "Natureza J": "FILANTROPICO", "Tipo de Un": "HOSPITAL GERAL", "Tipo de Ge": "M", "CNES": "8203695", "Competênc": null }, "geometry": { "type": "Point", "coordinates": [ -41.506704722373165, -17.832468920342922 ] } },
+{ "type": "Feature", "properties": { "Nome Fanta": "OCULAR CENTRO DE OFTALMOLOGIA", "Natureza J": "PRIVADO", "Tipo de Un": "HOSPITAL ESPECIALIZADO", "Tipo de Ge": "M", "CNES": "9644040", "Competênc": null }, "geometry": { "type": "Point", "coordinates": [ -41.506403118931296, -17.865325456707829 ] } }
+]
+}

@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "comunidades quilombolas",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "ogc_fid": 2290, "cd_uf": "31", "nm_uf": "MINAS GERAIS", "sg_uf": "MG", "cd_munic": "3168606", "nm_munic": "Teófilo Otoni", "idcq0001": "02076", "ocorrencia": "1", "cd_lq": "3168606020761", "prefixo": "COMUNIDADE QUILOMBOLA", "nm_cq": "CÓRREGO DO AÇUDE", "cd_aglom": null, "nm_aglom": null, "cd_tq": null, "nm_tq": null, "p_fcp": null, "lat_d": -17.974108194300001, "long_d": -41.279131862100002 }, "geometry": { "type": "Point", "coordinates": [ -41.279131862100002, -17.974108194300001 ] } },
+{ "type": "Feature", "properties": { "ogc_fid": 2858, "cd_uf": "31", "nm_uf": "MINAS GERAIS", "sg_uf": "MG", "cd_munic": "3168606", "nm_munic": "Teófilo Otoni", "idcq0001": "02596", "ocorrencia": "1", "cd_lq": "3168606025961", "prefixo": "COMUNIDADE QUILOMBOLA", "nm_cq": "FAZENDA SAUDADE", "cd_aglom": null, "nm_aglom": null, "cd_tq": null, "nm_tq": null, "p_fcp": null, "lat_d": -17.9609338749, "long_d": -41.284492277399998 }, "geometry": { "type": "Point", "coordinates": [ -41.284492277399998, -17.9609338749 ] } },
+{ "type": "Feature", "properties": { "ogc_fid": 7066, "cd_uf": "31", "nm_uf": "MINAS GERAIS", "sg_uf": "MG", "cd_munic": "3168606", "nm_munic": "Teófilo Otoni", "idcq0001": "06412", "ocorrencia": "1", "cd_lq": "3168606064121", "prefixo": "COMUNIDADE QUILOMBOLA", "nm_cq": "SÃO JULIÃO II", "cd_aglom": "00030", "nm_aglom": "COMUNIDADE QUILOMBOLA SÃO JULIÃO II", "cd_tq": null, "nm_tq": null, "p_fcp": "01420.009082/2010-50", "lat_d": -17.619883333099999, "long_d": -41.155399154100003 }, "geometry": { "type": "Point", "coordinates": [ -41.155399154100003, -17.619883333099999 ] } }
+]
+}

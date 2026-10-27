@@ -1,0 +1,26 @@
+{
+"type": "FeatureCollection",
+"name": "EFBM Patrimonios",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "ID": 1, "Y": -17.827738, "X": -41.144923, "NOME": "Estação Bias Fortes" }, "geometry": { "type": "Point", "coordinates": [ -41.144923, -17.827738 ] } },
+{ "type": "Feature", "properties": { "ID": 2, "Y": -17.866748, "X": -41.238459, "NOME": "Casas Turma 34" }, "geometry": { "type": "Point", "coordinates": [ -41.238459, -17.866748 ] } },
+{ "type": "Feature", "properties": { "ID": 3, "Y": -17.871417, "X": -41.241967, "NOME": "PE São João" }, "geometry": { "type": "Point", "coordinates": [ -41.241967, -17.871417 ] } },
+{ "type": "Feature", "properties": { "ID": 4, "Y": -17.882378, "X": -41.311328, "NOME": "Estação Pedro Versiani" }, "geometry": { "type": "Point", "coordinates": [ -41.311328, -17.882378 ] } },
+{ "type": "Feature", "properties": { "ID": 5, "Y": -17.886517, "X": -41.329762, "NOME": "Caixa d'água" }, "geometry": { "type": "Point", "coordinates": [ -41.329762, -17.886517 ] } },
+{ "type": "Feature", "properties": { "ID": 6, "Y": -17.8891, "X": -41.360601, "NOME": "Casas Turma 35" }, "geometry": { "type": "Point", "coordinates": [ -41.360601, -17.8891 ] } },
+{ "type": "Feature", "properties": { "ID": 7, "Y": -17.900687, "X": -41.383437, "NOME": "Estação Planice" }, "geometry": { "type": "Point", "coordinates": [ -41.383437, -17.900687 ] } },
+{ "type": "Feature", "properties": { "ID": 8, "Y": -17.908433, "X": -41.4044, "NOME": "Estação Itamunheque" }, "geometry": { "type": "Point", "coordinates": [ -41.4044, -17.908433 ] } },
+{ "type": "Feature", "properties": { "ID": 9, "Y": -17.880929, "X": -41.427712, "NOME": "Casas Turma 36" }, "geometry": { "type": "Point", "coordinates": [ -41.427712, -17.880929 ] } },
+{ "type": "Feature", "properties": { "ID": 10, "Y": -17.875478, "X": -41.437964, "NOME": "PE Cantinho" }, "geometry": { "type": "Point", "coordinates": [ -41.437964, -17.875478 ] } },
+{ "type": "Feature", "properties": { "ID": 11, "Y": -17.873154, "X": -41.468947, "NOME": "Casas Turma 37" }, "geometry": { "type": "Point", "coordinates": [ -41.468947, -17.873154 ] } },
+{ "type": "Feature", "properties": { "ID": 12, "Y": -17.86811, "X": -41.512609, "NOME": "Estação de Teófilo Otoni" }, "geometry": { "type": "Point", "coordinates": [ -41.512609, -17.86811 ] } },
+{ "type": "Feature", "properties": { "ID": 13, "Y": -17.869324, "X": -41.513505, "NOME": "Hospital dos Ferroviários" }, "geometry": { "type": "Point", "coordinates": [ -41.513505, -17.869324 ] } },
+{ "type": "Feature", "properties": { "ID": 14, "Y": -17.864356, "X": -41.507822, "NOME": "Locomotiva Poxixá" }, "geometry": { "type": "Point", "coordinates": [ -41.507822, -17.864356 ] } },
+{ "type": "Feature", "properties": { "ID": 15, "Y": -17.86765, "X": -41.515104, "NOME": "Associação Cultural Ferroviária Bahia-Minas" }, "geometry": { "type": "Point", "coordinates": [ -41.515104, -17.86765 ] } },
+{ "type": "Feature", "properties": { "ID": 16, "Y": -17.867264, "X": -41.516466, "NOME": "Pontilhão da Rua Júlio Costa" }, "geometry": { "type": "Point", "coordinates": [ -41.516466, -17.867264 ] } },
+{ "type": "Feature", "properties": { "ID": 18, "Y": -17.848835, "X": -41.535358, "NOME": "Casas Turma 38" }, "geometry": { "type": "Point", "coordinates": [ -41.535358, -17.848835 ] } },
+{ "type": "Feature", "properties": { "ID": 19, "Y": -17.85497, "X": -41.558734, "NOME": "PE Aliança" }, "geometry": { "type": "Point", "coordinates": [ -41.558734, -17.85497 ] } },
+{ "type": "Feature", "properties": { "ID": 20, "Y": -17.861233, "X": -41.562876, "NOME": "Túnel Gangorrinha 01" }, "geometry": { "type": "Point", "coordinates": [ -41.562876, -17.861233 ] } }
+]
+}

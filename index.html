@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geoportal de Teófilo Otoni - MG | WebGIS Oficial</title>
+  <meta name="description" content="Geoportal WebGIS do Município de Teófilo Otoni - MG. Visualização de camadas geoespaciais oficiais: INDE, IDE-SISEMA (MG), IFNMG e Prefeitura Municipal. Concepção: Prof. Sérgio Lana - Doutor em Geografia.">
+  <meta name="author" content="Prof. Sérgio Lana - Doutor em Geografia - IFNMG">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="./assets/logo_ifnmg.jpg">
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <!-- Leaflet MarkerCluster CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+
+  <!-- Estilos Customizados do Geoportal -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <div id="app-container">
+    <!-- ====================================================================
+         1. CABEÇALHO SUPERIOR (NAVBAR)
+         ==================================================================== -->
+    <header class="header-bar">
+      <!-- Seção da Marca / Logos -->
+      <div class="brand-section">
+        <button id="mobile-menu-btn" class="mobile-menu-btn" title="Alternar Painel de Camadas">
+          <i class="fa fa-bars"></i>
+        </button>
+        <img src="./assets/logo_ifnmg.jpg" alt="Logo IFNMG Campus Teófilo Otoni" class="brand-logo-img">
+        <div class="brand-divider"></div>
+        <div class="brand-text">
+          <h1>
+            Geoportal Teófilo Otoni
+            <span class="badge-mun">WebGIS</span>
+          </h1>
+          <p>Prof. Sérgio Lana - Doutor em Geografia &bull; IFNMG</p>
+        </div>
+      </div>
+
+      <!-- Campo de Busca Global de Elementos -->
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <i class="fa fa-magnifying-glass search-icon"></i>
+          <input 
+            type="text" 
+            id="global-search-input" 
+            class="search-input" 
+            placeholder="Buscar escolas, bairros, unidades de saúde, poços, vias..."
+            autocomplete="off"
+          >
+          <button id="search-clear-btn" class="search-clear-btn" title="Limpar busca">
+            <i class="fa fa-circle-xmark"></i>
+          </button>
+        </div>
+        <!-- Resultados da Busca -->
+        <div id="search-results-dropdown" class="search-results-dropdown"></div>
+      </div>
+
+      <!-- Ações do Cabeçalho -->
+      <div class="header-actions">
+        <!-- BOTÃO DE GEOCOLABORAÇÃO -->
+        <button id="btn-header-collab" class="header-btn btn-collab" title="Mapear Impactos Socioambientais e Problemas">
+          <i class="fa fa-bullhorn"></i>
+          <span>Geocolaboração</span>
+        </button>
+
+        <button id="btn-stats" class="header-btn" title="Indicadores e Resumo Territorial">
+          <i class="fa fa-chart-pie"></i>
+          <span>Resumo</span>
+        </button>
+        
+        <button id="btn-about" class="header-btn btn-primary" title="Concepção, Autoria e Metadados">
+          <i class="fa fa-circle-info"></i>
+          <span>Sobre & Metadados</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         2. ÁREA DE TRABALHO (SIDEBAR + MAPA)
+         ==================================================================== -->
+    <div class="workspace-wrapper">
+      <!-- Backdrop para fechar a sidebar no mobile ao clicar fora -->
+      <div id="mobile-backdrop" class="mobile-backdrop"></div>
+      
+      <!-- BARRA LATERAL (CATÁLOGO DE CAMADAS) -->
+      <aside class="sidebar" id="sidebar">
+        <!-- Botão Flutuante para Recolher/Expandir -->
+        <button id="toggle-sidebar-btn" class="sidebar-toggle-btn" title="Recolher / Expandir Painel">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+
+        <!-- Cabeçalho da Sidebar -->
+        <div class="sidebar-header">
+          <div class="sidebar-title">
+            <h2>
+              <i class="fa fa-layer-group" style="color: var(--primary);"></i>
+              Camadas Vetoriais
+            </h2>
+            <div style="display: flex; align-items: center; gap: 0.45rem;">
+              <button id="btn-toggle-all-cats" class="header-tiny-btn" title="Expandir ou Recolher todas as categorias">
+                <i class="fa fa-angles-up-down"></i>
+              </button>
+              <span id="active-layers-count" class="active-count-badge">1 ativa</span>
+            </div>
+          </div>
+
+          <!-- BOTÃO DE INSERIR CAMADA GEOJSON -->
+          <button id="btn-open-import-geojson" class="btn-import-geojson" title="Importar arquivo GeoJSON do seu computador">
+            <i class="fa fa-cloud-arrow-up"></i>
+            <span>+ Inserir Camada GeoJSON</span>
+          </button>
+
+          <!-- Campo de Filtro de Camadas -->
+          <input 
+            type="text" 
+            id="layer-filter-input" 
+            class="layer-filter-input" 
+            placeholder="Filtrar camadas do catálogo..."
+          >
+        </div>
+
+        <!-- Conteúdo: Lista Dinâmica de Categorias e Camadas -->
+        <div class="sidebar-content" id="layer-catalog-container">
+          <!-- Renderizado via JavaScript (Geoportal.initSidebarCatalog) -->
+        </div>
+
+        <!-- Rodapé da Sidebar -->
+        <div class="sidebar-footer">
+          <button id="btn-turn-all-on" class="footer-btn" title="Ativar todas as camadas no mapa">
+            <i class="fa fa-check-double"></i> Ativar Todas
+          </button>
+          <button id="btn-turn-all-off" class="footer-btn" title="Desativar todas as camadas (exceto limite)">
+            <i class="fa fa-eye-slash"></i> Desativar
+          </button>
+          <button id="btn-scroll-catalog" class="footer-btn" title="Rolar até o final ou topo do painel">
+            <i class="fa fa-arrow-down" id="btn-scroll-icon"></i> <span id="btn-scroll-text">Rolar ao Fim</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- MAPA CENTRAL (LEAFLET) -->
+      <main id="map">
+        <!-- BANNER DE INSTRUÇÃO DE GEOCOLABORAÇÃO -->
+        <div id="collab-instruction-banner" class="collab-instruction-banner">
+          <i class="fa fa-map-pin"></i>
+          <span>Clique no mapa sobre o local do impacto ou problema para marcar o ponto</span>
+          <button id="btn-cancel-collab-mode">Cancelar</button>
+        </div>
+
+        <!-- Barra de Ferramentas Flutuante Superior Esquerda -->
+        <div class="map-floating-toolbar">
+          <div class="toolbar-group">
+            <button id="btn-reset-extent" class="tool-btn" title="Enquadrar Município Inteiro">
+              <i class="fa fa-expand"></i>
+              <span>Ver Município</span>
+            </button>
+          </div>
+
+          <div class="toolbar-group">
+            <button id="tool-measure-distance" class="tool-btn" title="Medir Distância (Régua)">
+              <i class="fa fa-ruler"></i>
+              <span>Distância</span>
+            </button>
+            <button id="tool-measure-area" class="tool-btn" title="Medir Área Poligonal">
+              <i class="fa fa-draw-polygon"></i>
+              <span>Área</span>
+            </button>
+            <button id="tool-measure-clear" class="tool-btn" title="Limpar Medições">
+              <i class="fa fa-trash-can"></i>
+            </button>
+          </div>
+
+          <div class="toolbar-group">
+            <button id="tool-collab-add" class="tool-btn" title="Mapear impacto socioambiental">
+              <i class="fa fa-bullhorn" style="color: #ea580c;"></i>
+              <span>Relatar Impacto</span>
+            </button>
+          </div>
+
+          <div class="toolbar-group">
+            <button id="btn-fullscreen" class="tool-btn" title="Modo Tela Cheia">
+              <i class="fa fa-expand"></i>
+              <span>Tela Cheia</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra Inferior de Coordenadas e Escala (HUD) -->
+        <div class="map-status-hud">
+          <div class="status-item">
+            <i class="fa fa-location-crosshairs"></i>
+            <span id="hud-coordinates">Lat: -17.86250° | Lon: -41.50960°</span>
+          </div>
+          <div class="status-item">
+            <span>Datum: <strong>SIRGAS 2000 (EPSG:4674)</strong></span>
+          </div>
+          <div class="status-item">
+            <span id="hud-zoom">Zoom: 11</span>
+          </div>
+        </div>
+      </main>
+
+      <!-- PAINEL DE INSPEÇÃO LATERAL DIREITO (INSPECTOR DE ATRIBUTOS) -->
+      <aside class="feature-inspector" id="feature-inspector">
+        <div class="inspector-header">
+          <h3>
+            <i class="fa fa-circle-nodes" style="color: var(--primary);"></i>
+            Detalhes do Objeto
+          </h3>
+          <button id="close-inspector-btn" class="inspector-close-btn" title="Fechar painel">
+            <i class="fa fa-xmark"></i>
+          </button>
+        </div>
+        <div class="inspector-body">
+          <span id="inspector-layer-badge" class="inspector-layer-badge badge-INDE">Camada</span>
+          <h4 id="inspector-feature-title" class="inspector-title">Nome do Elemento</h4>
+          <table class="attributes-table">
+            <tbody id="inspector-attributes-body">
+              <!-- Atributos inseridos dinamicamente -->
+            </tbody>
+          </table>
+        </div>
+        <div class="inspector-actions">
+          <button class="inspector-action-btn" onclick="document.getElementById('feature-inspector').classList.remove('open')">
+            <i class="fa fa-check"></i> Fechar
+          </button>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       3. MODAL DE GEOCOLABORAÇÃO (RELATO DE IMPACTO COM FOTO/VÍDEO)
+       ==================================================================== -->
+  <div id="modal-collab" class="modal-overlay">
+    <div class="modal-dialog" style="max-width: 640px;">
+      <div class="modal-header" style="background: #fff7ed; border-bottom: 1px solid #fed7aa;">
+        <h2 style="color: #9a3412;">
+          <i class="fa fa-bullhorn" style="color: #ea580c;"></i>
+          Geocolaboração: Identificar Impacto Socioambiental
+        </h2>
+        <button id="btn-close-modal-collab" class="modal-close-btn" title="Fechar modal">
+          <i class="fa fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-content">
+        <form id="form-collab-report" style="display: flex; flex-direction: column; gap: 0.85rem;">
+          <div class="collab-form-group">
+            <label for="collab-category"><i class="fa fa-tags"></i> Tipo de Impacto / Problema:</label>
+            <select id="collab-category" class="collab-select" required>
+              <option value="Desmatamento / Queimada">🌳 Desmatamento ou Queimada irregular</option>
+              <option value="Descarte Irregular de Lixo">🗑️ Descarte irregular de lixo / entulho</option>
+              <option value="Poluição Hídrica / Nascente">💧 Esgoto ou contaminação em rio / nascente</option>
+              <option value="Erosão / Risco de Deslizamento">⚠️ Erosão / Risco geológico de deslizamento</option>
+              <option value="Alagamento / Enchente">🌊 Alagamento / Ponto de inundação</option>
+              <option value="Problema Viário / Infraestrutura">🚧 Buraco na via / Ponte danificada / Estrada precária</option>
+              <option value="Saneamento / Abastecimento">🚰 Falta de saneamento básico ou água</option>
+              <option value="Dano ao Patrimônio">🏛️ Dano ao patrimônio histórico ou cultural</option>
+              <option value="Outro Impacto">❓ Outro impacto socioambiental</option>
+            </select>
+          </div>
+
+          <div class="collab-form-group">
+            <label for="collab-title"><i class="fa fa-heading"></i> Título do Relato:</label>
+            <input type="text" id="collab-title" class="collab-input" placeholder="Ex: Despejo de entulho na encosta da rua..." required>
+          </div>
+
+          <div class="collab-form-group">
+            <label for="collab-desc"><i class="fa fa-align-left"></i> Descrição do Problema Identificado:</label>
+            <textarea id="collab-desc" class="collab-textarea" rows="3" placeholder="Descreva o que está ocorrendo, extensão aproximada ou riscos para a comunidade..." required></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div class="collab-form-group">
+              <label for="collab-neighborhood"><i class="fa fa-city"></i> Bairro / Localidade:</label>
+              <input type="text" id="collab-neighborhood" class="collab-input" placeholder="Ex: Manoel Pimenta, Topázio...">
+            </div>
+            <div class="collab-form-group">
+              <label for="collab-coords-display"><i class="fa fa-location-crosshairs"></i> Coordenadas (Lat, Lon):</label>
+              <input type="text" id="collab-coords-display" class="collab-input" readonly style="background: #f1f5f9; color: #64748b; font-family: var(--font-mono);">
+            </div>
+          </div>
+
+          <!-- UPLOAD DE FOTO OU VÍDEO -->
+          <div class="collab-form-group">
+            <label for="collab-media-file"><i class="fa fa-camera"></i> Inserir Fotografia ou Vídeo do Problema:</label>
+            <input type="file" id="collab-media-file" class="collab-input" accept="image/*,video/*">
+            <div id="collab-preview-box" class="collab-preview-box">
+              <img id="collab-preview-img" class="collab-preview-img" alt="Pré-visualização da foto">
+              <video id="collab-preview-video" class="collab-preview-video" controls></video>
+            </div>
+          </div>
+
+          <div class="collab-form-group">
+            <label for="collab-author"><i class="fa fa-user"></i> Seu Nome ou Instituição (opcional):</label>
+            <input type="text" id="collab-author" class="collab-input" placeholder="Ex: Morador local, Aluno IFNMG...">
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+            <button type="submit" class="header-btn btn-primary" style="flex: 2; justify-content: center; background: #ea580c; border-color: #ea580c;">
+              <i class="fa fa-check"></i> Publicar Relato no Mapa
+            </button>
+            <button type="button" id="btn-export-collab-kml" class="header-btn" style="flex: 1; justify-content: center;" title="Exportar todos os relatos salvos para Google Earth">
+              <i class="fa fa-file-arrow-down"></i> Baixar KML
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       4. MODAL PARA INSERIR CAMADA GEOJSON DO USUÁRIO
+       ==================================================================== -->
+  <div id="modal-import-geojson" class="modal-overlay">
+    <div class="modal-dialog" style="max-width: 540px;">
+      <div class="modal-header">
+        <h2>
+          <i class="fa fa-cloud-arrow-up" style="color: var(--primary);"></i>
+          Inserir Camada GeoJSON
+        </h2>
+        <button id="btn-close-modal-import" class="modal-close-btn" title="Fechar modal">
+          <i class="fa fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-content">
+        <p style="font-size: 0.82rem; color: var(--text-secondary);">
+          Selecione um arquivo <strong>.geojson</strong> ou <strong>.json</strong> do seu computador para visualizá-lo instantaneamente no Geoportal sobre as imagens de satélite e mapas base.
+        </p>
+
+        <div class="collab-form-group">
+          <label for="import-file-input">Arquivo GeoJSON:</label>
+          <input type="file" id="import-file-input" class="collab-input" accept=".geojson,.json">
+        </div>
+
+        <div class="collab-form-group">
+          <label for="import-layer-name">Nome de Exibição da Camada:</label>
+          <input type="text" id="import-layer-name" class="collab-input" placeholder="Ex: Minha Área de Estudo">
+        </div>
+
+        <div class="collab-form-group">
+          <label for="import-layer-color">Cor da Camada:</label>
+          <input type="color" id="import-layer-color" value="#0f766e" style="height: 40px; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); cursor: pointer;">
+        </div>
+
+        <button type="button" id="btn-confirm-import" class="header-btn btn-primary" style="justify-content: center; padding: 0.75rem; margin-top: 0.5rem;">
+          <i class="fa fa-plus"></i> Adicionar Camada ao Mapa
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       5. MODAL "SOBRE O GEOPORTAL & METADADOS"
+       ==================================================================== -->
+  <div id="modal-about" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2>
+          <i class="fa fa-circle-info" style="color: var(--primary);"></i>
+          Sobre o Geoportal de Teófilo Otoni
+        </h2>
+        <button id="btn-close-modal-about" class="modal-close-btn" title="Fechar modal">
+          <i class="fa fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-content">
+        <!-- Logo e Instituição -->
+        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 1.25rem;">
+          <img src="./assets/logo_ifnmg.jpg" alt="IFNMG Campus Teófilo Otoni" style="height: 52px; object-fit: contain;">
+          <div style="text-align: right;">
+            <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a;">Instituto Federal do Norte de Minas Gerais</div>
+            <div style="font-size: 0.8rem; color: #475569;">Campus Teófilo Otoni &bull; Vale do Mucuri</div>
+          </div>
+        </div>
+
+        <!-- DESTAQUE DE AUTORIA E CONCEPÇÃO: PROF. SÉRGIO LANA - DOUTOR EM GEOGRAFIA -->
+        <div class="author-highlight-card">
+          <div class="author-info-box">
+            <div class="author-avatar">
+              <i class="fa fa-user-graduate"></i>
+            </div>
+            <div class="author-details">
+              <h4>Elaboração e Concepção</h4>
+              <p style="font-size: 1.05rem; font-weight: 800; color: #065f46; margin-top: 2px;">
+                Prof. Sérgio Lana - Doutor em Geografia
+              </p>
+              <p>Professor do Ensino Básico, Técnico e Tecnológico — IFNMG (Campus Teófilo Otoni)</p>
+              <p style="font-size: 0.78rem; color: #065f46; margin-top: 3px;">
+                Doutor em Geografia (Tratamento da Informação Espacial) &bull; Pesquisador em Geovisualização, Cartografia Histórica e Estrada de Ferro Bahia e Minas (EFBM).
+              </p>
+            </div>
+          </div>
+          <a 
+            href="http://lattes.cnpq.br/2773267607623633" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="lattes-link-btn"
+            title="Acessar Currículo Lattes do Prof. Sérgio Lana"
+          >
+            <i class="fa fa-address-card"></i>
+            <span>Currículo Lattes</span>
+            <i class="fa fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i>
+          </a>
+        </div>
+
+        <!-- FONTES OFICIAIS DAS CAMADAS VETORIAIS -->
+        <div>
+          <h3 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa fa-database" style="color: var(--secondary);"></i>
+            Fontes Oficiais dos Dados Geoespaciais
+          </h3>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem;">
+            O Geoportal integra, harmoniza e disponibiliza publicamente informações geoespaciais oficiais padronizadas no Sistema de Referência Geocêntrico para as Américas (<strong>SIRGAS 2000 / EPSG:4674</strong>):
+          </p>
+          <div class="sources-grid">
+            <!-- 1. INDE -->
+            <div class="source-card">
+              <div class="source-card-header">
+                <span class="source-card-badge badge-INDE">INDE</span>
+                <h5>Infraestrutura Nacional de Dados Espaciais</h5>
+              </div>
+              <p>Catálogo unificado do Governo Federal Brasileiro. Fornece as bases cartográficas do <strong>IBGE</strong> (limites municipais, distritos, setores censitários, localidades, relevo), <strong>CPRM / SGB</strong> (geologia, geodiversidade, poços tubulares SIAGAS, riscos geológicos), <strong>DNIT</strong> (rodovias federais SNV), <strong>INCRA</strong> (assentamentos) e <strong>FUNAI</strong> (terras indígenas).</p>
+            </div>
+
+            <!-- 2. IDE-SISEMA -->
+            <div class="source-card">
+              <div class="source-card-header">
+                <span class="source-card-badge badge-SISEMA">IDE-SISEMA (MG)</span>
+                <h5>Infraestrutura de Dados Espaciais do SISEMA</h5>
+              </div>
+              <p>Sistema Estadual de Meio Ambiente e Recursos Hídricos de Minas Gerais. Disponibiliza a delimitação de <strong>Unidades de Conservação (IEF-MG)</strong>, cobertura vegetal e fitofisionomia, ottobacias hidrográficas (IGAM/ANA), rodovias estaduais (DER-MG) e o <strong>Cadastro Ambiental Rural (CAR / SICAR-MG)</strong>.</p>
+            </div>
+
+            <!-- 3. IFNMG -->
+            <div class="source-card">
+              <div class="source-card-header">
+                <span class="source-card-badge badge-IFNMG">IFNMG</span>
+                <h5>IFNMG - Campus Teófilo Otoni</h5>
+              </div>
+              <p>Produção científica e acadêmica do Instituto Federal desenvolvida pelo <strong>Prof. Sérgio Lana - Doutor em Geografia</strong>. Abrange o georreferenciamento e reconstituição espacial da <strong>Estrada de Ferro Bahia e Minas (EFBM)</strong> — traçado regional completo e trecho detalhado municipal —, estudos de patrimônio territorial, paisagem e diagnóstico ambiental.</p>
+            </div>
+
+            <!-- 4. Prefeitura Municipal -->
+            <div class="source-card">
+              <div class="source-card-header">
+                <span class="source-card-badge badge-PMTO">Prefeitura Municipal</span>
+                <h5>Prefeitura de Teófilo Otoni</h5>
+              </div>
+              <p>Administração Municipal de Teófilo Otoni. Fornece a delimitação urbana e cadastral dos <strong>39 bairros municipais</strong>, sistema viário, estradas vicinais rurais e equipamentos públicos de atendimento local.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CATÁLOGO DETALHADO DE METADADOS -->
+        <div>
+          <h3 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa fa-table-list" style="color: var(--primary);"></i>
+            Catálogo Completo de Camadas (41 Camadas Vetoriais)
+          </h3>
+          <div style="max-height: 280px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
+            <table class="attributes-table" style="margin-bottom: 0;">
+              <thead>
+                <tr style="background: #f8fafc; border-bottom: 2px solid var(--border-color);">
+                  <th style="padding: 0.6rem 0.75rem;">Camada Vetorial</th>
+                  <th style="padding: 0.6rem 0.5rem;">Fonte</th>
+                  <th style="padding: 0.6rem 0.5rem;">Órgão Produtor</th>
+                  <th style="padding: 0.6rem 0.5rem;">Geometria</th>
+                  <th style="padding: 0.6rem 0.75rem; text-align: right;">Feições</th>
+                </tr>
+              </thead>
+              <tbody id="modal-metadata-tbody">
+                <!-- Preenchido via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       6. MODAL "RESUMO TERRITORIAL / ESTATÍSTICAS"
+       ==================================================================== -->
+  <div id="modal-stats" class="modal-overlay">
+    <div class="modal-dialog" style="max-width: 720px;">
+      <div class="modal-header">
+        <h2>
+          <i class="fa fa-chart-pie" style="color: var(--primary);"></i>
+          Resumo Territorial de Teófilo Otoni - MG
+        </h2>
+        <button id="btn-close-modal-stats" class="modal-close-btn" title="Fechar modal">
+          <i class="fa fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-content">
+        <div class="stats-summary-grid">
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon"><i class="fa fa-map-location-dot"></i></div>
+            <div class="stat-metric-value">3.242 km²</div>
+            <div class="stat-metric-label">Área Territorial Total</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon"><i class="fa fa-landmark"></i></div>
+            <div class="stat-metric-value">6 Distritos</div>
+            <div class="stat-metric-label">Divisão Distrital Oficial</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon"><i class="fa fa-city"></i></div>
+            <div class="stat-metric-value">39 Bairros</div>
+            <div class="stat-metric-label">Bairros Urbanos Mapeados</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon"><i class="fa fa-graduation-cap"></i></div>
+            <div class="stat-metric-value">133 Escolas</div>
+            <div class="stat-metric-label">Rede de Ensino & IFNMG</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon"><i class="fa fa-heart-pulse"></i></div>
+            <div class="stat-metric-value">538 Unidades</div>
+            <div class="stat-metric-label">Estabelecimentos de Saúde</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon"><i class="fa fa-tractor"></i></div>
+            <div class="stat-metric-value">4.089 Imóveis</div>
+            <div class="stat-metric-label">Cadastros Rurais (CAR)</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon"><i class="fa fa-faucet-drip"></i></div>
+            <div class="stat-metric-value">208 Poços</div>
+            <div class="stat-metric-label">Poços Tubulares (SIAGAS)</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon"><i class="fa fa-droplet"></i></div>
+            <div class="stat-metric-value">34 Nascentes</div>
+            <div class="stat-metric-label">Nascentes Urbanas Diagnosticadas</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon"><i class="fa fa-train"></i></div>
+            <div class="stat-metric-value">EFBM</div>
+            <div class="stat-metric-label">Estrada de Ferro Bahia e Minas</div>
+          </div>
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+          <strong>Nota Metodológica:</strong> Teófilo Otoni é polo do Vale do Mucuri no Nordeste de Minas Gerais. Os dados acima representam a síntese quantitativa dos levantamentos vetoriais integrados no presente Geoportal através de fontes federais, estaduais, municipais e acadêmicas do IFNMG.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       7. DADOS PRE-CARREGADOS
+       ==================================================================== -->
+  <!-- Apenas a camada limite_municipal é ativa e pré-carregada na inicialização -->
+  <script src="./data/limite_municipal.js"></script>
+
+  <!-- ====================================================================
+       8. BIBLIOTECAS JS E SCRIPTS DA APLICAÇÃO
+       ==================================================================== -->
+  <!-- Leaflet Core JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Leaflet MarkerCluster JS -->
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  
+  <!-- Configurações das Camadas e Metadados -->
+  <script src="./js/layers-config.js"></script>
+  <!-- Aplicação Principal do Geoportal -->
+  <script src="./js/app.js"></script>
+
+</body>
+</html>
