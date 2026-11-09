@@ -8,9 +8,22 @@
  * Fontes Oficiais: INDE, IDE-SISEMA (MG), IFNMG, Prefeitura Municipal de Teófilo Otoni
  */
 
-document.addEventListener("DOMContentLoaded", () => {
-  window.GeoportalApp = new Geoportal();
-});
+function bootGeoportal() {
+  if (!window.GeoportalApp) {
+    try {
+      window.GeoportalApp = new Geoportal();
+      console.log("Geoportal inicializado com sucesso!");
+    } catch (e) {
+      console.error("Erro fatal ao inicializar Geoportal:", e);
+    }
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bootGeoportal);
+} else {
+  bootGeoportal();
+}
 
 class Geoportal {
   constructor() {

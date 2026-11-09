@@ -16,13 +16,7 @@ const GEOPORTAL_CONFIG = {
     bounds: [
       [-18.0418, -41.6724], // Sudoeste
       [-17.3302, -41.0403]  // Nordeste
-      {
-      id: "patrimonio_cultural",
-      title: "Patrimônio Cultural, Histórico & Comunidades Tradicionais",
-      icon: "fa-landmark",
-      description: "Bens tombados, estações e patrimônio da EFBM, terras indígenas, quilombolas e assentamentos rurais"
-    },
-  ],
+    ],
     initialZoom: 11
   },
 
@@ -92,6 +86,12 @@ const GEOPORTAL_CONFIG = {
       title: "Equipamentos Públicos & Serviços",
       icon: "fa-building-columns",
       description: "Rede escolar, estabelecimentos de saúde e infraestrutura de atendimento"
+    },
+    {
+      id: "patrimonio_cultural",
+      title: "Patrimônio Cultural, Histórico & Comunidades Tradicionais",
+      icon: "fa-landmark",
+      description: "Bens tombados, acervo e estações da EFBM, terras indígenas, quilombolas e assentamentos rurais"
     }
   ],
 
