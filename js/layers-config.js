@@ -16,7 +16,13 @@ const GEOPORTAL_CONFIG = {
     bounds: [
       [-18.0418, -41.6724], // Sudoeste
       [-17.3302, -41.0403]  // Nordeste
-    ],
+      {
+      id: "patrimonio_cultural",
+      title: "Patrimônio Cultural, Histórico & Comunidades Tradicionais",
+      icon: "fa-landmark",
+      description: "Bens tombados, estações e patrimônio da EFBM, terras indígenas, quilombolas e assentamentos rurais"
+    },
+  ],
     initialZoom: 11
   },
 
@@ -108,14 +114,15 @@ const GEOPORTAL_CONFIG = {
         color: "#dc2626",       // Vermelho Carmim cartográfico oficial do IBGE para limites municipais
         weight: 3.5,
         opacity: 1,
-        fillColor: "#dc2626",
-        fillOpacity: 0.04,
+        fill: false,
+        fillColor: "transparent",
+        fillOpacity: 0,
         dashArray: "8, 5"       // Traçado cartográfico oficial de limite municipal
       },
       legend: {
-        type: "polygon",
+        type: "line",
         items: [
-          { label: "Limite Municipal Oficial de Teófilo Otoni (IBGE)", color: "#dc2626", fillColor: "#fee2e2", dash: true }
+          { label: "Limite Municipal Oficial de Teófilo Otoni (IBGE)", color: "#dc2626", dash: true }
         ]
       },
       popupTitle: "Município de Teófilo Otoni",
@@ -670,7 +677,7 @@ const GEOPORTAL_CONFIG = {
     {
       id: "terras_indigenas",
       title: "Terras Indígenas (Maxakali)",
-      category: "ambiental",
+      category: "patrimonio_cultural",
       source: "INDE",
       subsource: "FUNAI / INDE",
       url: "./data/terras_indigenas.geojson",
@@ -705,7 +712,7 @@ const GEOPORTAL_CONFIG = {
     {
       id: "comunidades_quilombolas",
       title: "Comunidades Quilombolas (FCP / INCRA / IBGE)",
-      category: "ambiental",
+      category: "patrimonio_cultural",
       source: "INDE",
       subsource: "Fundação Cultural Palmares / INCRA / IBGE",
       url: "./data/comunidades_quilombolas.geojson",
@@ -737,7 +744,7 @@ const GEOPORTAL_CONFIG = {
     {
       id: "assentamentos_incra",
       title: "Assentamentos de Reforma Agrária (INCRA)",
-      category: "ambiental",
+      category: "patrimonio_cultural",
       source: "INDE",
       subsource: "INCRA / INDE",
       url: "./data/assentamentos_incra.geojson",
@@ -1145,6 +1152,118 @@ const GEOPORTAL_CONFIG = {
       ]
     },
     {
+      id: "relevo",
+      title: "Relevo (Macrocompartimentos)",
+      category: "geologia",
+      source: "INDE",
+      subsource: "IBGE / CPRM",
+      url: "./data/relevo.geojson",
+      jsFile: "./data/relevo.js",
+      geomType: "polygon",
+      active: false,
+      count: 12,
+      thematic: true,
+      multiColorGradient: "linear-gradient(135deg, #E6F5FF, #A80000, #A87000, #FFFF00, #D7C29E, #ABCD66)",
+      classify: {
+        field: "Compartime",
+        categories: {
+          "Corpo d'água continental": {
+            label: "Corpo d'água — RGB(230, 245, 255)",
+            color: "#60a5fa",
+            fillColor: "#E6F5FF",
+            fillOpacity: 0.85,
+            weight: 1.2
+          },
+          "Corpo d'água": {
+            label: "Corpo d'água — RGB(230, 245, 255)",
+            color: "#60a5fa",
+            fillColor: "#E6F5FF",
+            fillOpacity: 0.85,
+            weight: 1.2
+          },
+          "Montanhas": {
+            label: "Montanhas — RGB(168, 0, 0)",
+            color: "#7f1d1d",
+            fillColor: "#A80000",
+            fillOpacity: 0.75,
+            weight: 1.2
+          },
+          "Planaltos": {
+            label: "Planaltos — RGB(168, 112, 0)",
+            color: "#78350f",
+            fillColor: "#A87000",
+            fillOpacity: 0.75,
+            weight: 1.2
+          },
+          "Planícies": {
+            label: "Planícies — RGB(255, 255, 0)",
+            color: "#ca8a04",
+            fillColor: "#FFFF00",
+            fillOpacity: 0.75,
+            weight: 1.2
+          },
+          "Planicies": {
+            label: "Planícies — RGB(255, 255, 0)",
+            color: "#ca8a04",
+            fillColor: "#FFFF00",
+            fillOpacity: 0.75,
+            weight: 1.2
+          },
+          "Superfícies Rebaixadas": {
+            label: "Superfícies rebaixadas — RGB(215, 194, 158)",
+            color: "#a89078",
+            fillColor: "#D7C29E",
+            fillOpacity: 0.75,
+            weight: 1.2
+          },
+          "Superfícies rebaixadas": {
+            label: "Superfícies rebaixadas — RGB(215, 194, 158)",
+            color: "#a89078",
+            fillColor: "#D7C29E",
+            fillOpacity: 0.75,
+            weight: 1.2
+          },
+          "Tabuleiros": {
+            label: "Tabuleiros — RGB(171, 205, 102)",
+            color: "#65a30d",
+            fillColor: "#ABCD66",
+            fillOpacity: 0.75,
+            weight: 1.2
+          }
+        },
+        default: {
+          color: "#94a3b8",
+          fillColor: "#cbd5e1",
+          fillOpacity: 0.6,
+          weight: 1.2
+        }
+      },
+      style: {
+        color: "#64748b",
+        weight: 1.2,
+        opacity: 0.9,
+        fillColor: "#D7C29E",
+        fillOpacity: 0.75
+      },
+      legend: {
+        type: "polygon",
+        items: [
+          { label: "Corpo d'água — RGB(230, 245, 255)", color: "#60a5fa", fillColor: "#E6F5FF" },
+          { label: "Montanhas — RGB(168, 0, 0)", color: "#7f1d1d", fillColor: "#A80000" },
+          { label: "Planaltos — RGB(168, 112, 0)", color: "#78350f", fillColor: "#A87000" },
+          { label: "Planícies — RGB(255, 255, 0)", color: "#ca8a04", fillColor: "#FFFF00" },
+          { label: "Superfícies rebaixadas — RGB(215, 194, 158)", color: "#a89078", fillColor: "#D7C29E" },
+          { label: "Tabuleiros — RGB(171, 205, 102)", color: "#65a30d", fillColor: "#ABCD66" }
+        ]
+      },
+      popupTitle: "Macrocompartimento de Relevo",
+      titleField: "Compartime",
+      fields: [
+        { key: "Compartime", label: "Compartimento do Relevo" },
+        { key: "area_km2", label: "Área (km²)", format: v => (v ? Number(v).toFixed(2) + " km²" : "-") }
+      ]
+    },
+    {
       id: "pedologia",
       title: "Pedologia (Classes de Solos)",
       category: "geologia",
@@ -1156,28 +1275,70 @@ const GEOPORTAL_CONFIG = {
       active: false,
       count: 32,
       thematic: true,
-      multiColorGradient: "linear-gradient(135deg, #dc2626, #f59e0b, #0284c7, #64748b)",
+      multiColorGradient: "linear-gradient(135deg, #009696, #FF5500, #FF6600, #64748b)",
       classify: {
-        field: "ordem",
+        field: "legenda_2",
         categories: {
-          "LATOSSOLO": {
-            label: "Latossolos (solos profundos)",
-            color: "#991b1b",
-            fillColor: "#dc2626",
-            fillOpacity: 0.6,
-            weight: 1.2
-          },
-          "ARGISSOLO": {
-            label: "Argissolos (B textural)",
-            color: "#b45309",
-            fillColor: "#f59e0b",
-            fillOpacity: 0.6,
+          "GLEISSOLO HÁPLICO": {
+            label: "Gleissolos (Ciano escuro) — #009696",
+            color: "#006666",
+            fillColor: "#009696",
+            fillOpacity: 0.7,
             weight: 1.2
           },
           "GLEISSOLO": {
-            label: "Gleissolos (ambientes hidromórficos)",
-            color: "#0369a1",
-            fillColor: "#0284c7",
+            label: "Gleissolos (Ciano escuro) — #009696",
+            color: "#006666",
+            fillColor: "#009696",
+            fillOpacity: 0.7,
+            weight: 1.2
+          },
+          "LATOSSOLO VERMELHO-AMARELO": {
+            label: "Latossolo Vermelho-Amarelo (LVA) — #FF5500",
+            color: "#cc4400",
+            fillColor: "#FF5500",
+            fillOpacity: 0.7,
+            weight: 1.2
+          },
+          "LATOSSOLO": {
+            label: "Latossolo Vermelho-Amarelo (LVA) — #FF5500",
+            color: "#cc4400",
+            fillColor: "#FF5500",
+            fillOpacity: 0.7,
+            weight: 1.2
+          },
+          "LATOSSOLO AMARELO": {
+            label: "Latossolo Amarelo — #FF7700",
+            color: "#cc5200",
+            fillColor: "#FF7700",
+            fillOpacity: 0.7,
+            weight: 1.2
+          },
+          "ARGISSOLO VERMELHO-AMARELO": {
+            label: "Argissolo Vermelho-Amarelo — #FF6600",
+            color: "#cc5200",
+            fillColor: "#FF6600",
+            fillOpacity: 0.7,
+            weight: 1.2
+          },
+          "ARGISSOLO": {
+            label: "Argissolo Vermelho-Amarelo — #FF6600",
+            color: "#cc5200",
+            fillColor: "#FF6600",
+            fillOpacity: 0.7,
+            weight: 1.2
+          },
+          "ARGISSOLO VERMELHO": {
+            label: "Argissolo Vermelho — #E65100",
+            color: "#b33c00",
+            fillColor: "#E65100",
+            fillOpacity: 0.7,
+            weight: 1.2
+          },
+          "AFLORAMENTO": {
+            label: "Afloramentos Rochosos",
+            color: "#334155",
+            fillColor: "#64748b",
             fillOpacity: 0.6,
             weight: 1.2
           },
@@ -1187,29 +1348,36 @@ const GEOPORTAL_CONFIG = {
             fillColor: "#64748b",
             fillOpacity: 0.6,
             weight: 1.2
+          },
+          "ÁREA URBANA": {
+            label: "Área Urbana",
+            color: "#475569",
+            fillColor: "#94a3b8",
+            fillOpacity: 0.6,
+            weight: 1.2
           }
         },
         default: {
-          color: "#854d0e",
-          fillColor: "#ca8a04",
-          fillOpacity: 0.5,
+          color: "#cc5200",
+          fillColor: "#FF6600",
+          fillOpacity: 0.6,
           weight: 1.2
         }
       },
       style: {
-        color: "#854d0e",
+        color: "#cc5200",
         weight: 1.2,
         opacity: 0.85,
-        fillColor: "#f59e0b",
-        fillOpacity: 0.6
+        fillColor: "#FF6600",
+        fillOpacity: 0.7
       },
       legend: {
         type: "polygon",
         items: [
-          { label: "Latossolos (solos profundos e bem drenados)", color: "#991b1b", fillColor: "#dc2626" },
-          { label: "Argissolos (solos com gradiente textural)", color: "#b45309", fillColor: "#f59e0b" },
-          { label: "Gleissolos (várzeas saturadas com água)", color: "#0369a1", fillColor: "#0284c7" },
-          { label: "Afloramentos de Rochas", color: "#334155", fillColor: "#64748b" }
+          { label: "Gleissolos — RGB(0, 150, 150) / #009696", color: "#006666", fillColor: "#009696" },
+          { label: "Latossolo Vermelho-Amarelo (LVA) — RGB(255, 85, 0) / #FF5500", color: "#cc4400", fillColor: "#FF5500" },
+          { label: "Argissolo Vermelho-Amarelo — RGB(255, 102, 0) / #FF6600", color: "#cc5200", fillColor: "#FF6600" },
+          { label: "Afloramentos de Rochas / Outros", color: "#334155", fillColor: "#64748b" }
         ]
       },
       popupTitle: "Classe de Solo",
@@ -1528,7 +1696,7 @@ const GEOPORTAL_CONFIG = {
     {
       id: "tracado_efbm",
       title: "Estrada de Ferro Bahia e Minas (EFBM) - Rede Completa",
-      category: "infra",
+      category: "patrimonio_cultural",
       source: "IFNMG",
       subsource: "Pesquisa Acadêmica Prof. Sérgio Lana (IFNMG)",
       url: "./data/tracado_efbm.geojson",
@@ -1594,7 +1762,7 @@ const GEOPORTAL_CONFIG = {
     {
       id: "trecho_ferroviario_efbm",
       title: "EFBM - Trecho Histórico Detalhado em Teófilo Otoni",
-      category: "infra",
+      category: "patrimonio_cultural",
       source: "IFNMG",
       subsource: "Pesquisa Acadêmica Prof. Sérgio Lana (IFNMG)",
       url: "./data/trecho_ferroviario_efbm.geojson",
@@ -1625,7 +1793,7 @@ const GEOPORTAL_CONFIG = {
     {
       id: "efbm_margem_linha",
       title: "EFBM - Margem da Linha Férrea",
-      category: "infra",
+      category: "patrimonio_cultural",
       source: "IFNMG",
       subsource: "IFNMG - Campus Teófilo Otoni (Prof. Sérgio Lana)",
       url: "./data/efbm_margem_linha.geojson",
@@ -1656,7 +1824,7 @@ const GEOPORTAL_CONFIG = {
     {
       id: "efbm_morro_feijao_bebido",
       title: "EFBM - Morro do Feijão Bebido",
-      category: "infra",
+      category: "patrimonio_cultural",
       source: "IFNMG",
       subsource: "IFNMG - Campus Teófilo Otoni (Prof. Sérgio Lana)",
       url: "./data/efbm_morro_feijao_bebido.geojson",
@@ -1686,7 +1854,7 @@ const GEOPORTAL_CONFIG = {
     {
       id: "efbm_patrimonios",
       title: "EFBM - Acervo e Patrimônios Ferroviários",
-      category: "infra",
+      category: "patrimonio_cultural",
       source: "IFNMG",
       subsource: "IFNMG - Campus Teófilo Otoni (Prof. Sérgio Lana)",
       url: "./data/efbm_patrimonios.geojson",
@@ -1718,7 +1886,7 @@ const GEOPORTAL_CONFIG = {
     {
       id: "estacoes_ferroviarias",
       title: "Estações Ferroviárias da EFBM",
-      category: "infra",
+      category: "patrimonio_cultural",
       source: "IFNMG",
       subsource: "IFNMG - Campus Teófilo Otoni (Prof. Sérgio Lana)",
       url: "./data/estacoes_ferroviarias.geojson",
@@ -1857,7 +2025,7 @@ const GEOPORTAL_CONFIG = {
     {
       id: "bens_tombados",
       title: "Bens Culturais Tombados e Patrimônio Histórico",
-      category: "social",
+      category: "patrimonio_cultural",
       source: "INDE",
       subsource: "IPHAN - Instituto do Patrimônio Histórico e Artístico Nacional",
       url: "./data/bens_tombados.geojson",

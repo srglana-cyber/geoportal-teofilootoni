@@ -796,6 +796,9 @@ class Geoportal {
       const strVal = fieldVal !== undefined && fieldVal !== null ? String(fieldVal).trim() : "";
       const cat = layerConf.classify.categories[fieldVal] || 
                   layerConf.classify.categories[strVal] || 
+                  (feature.properties.ordem && layerConf.classify.categories[feature.properties.ordem]) ||
+                  (feature.properties.legenda_2 && layerConf.classify.categories[feature.properties.legenda_2]) ||
+                  (feature.properties.Compartime && layerConf.classify.categories[feature.properties.Compartime]) ||
                   layerConf.classify.default;
       if (cat) {
         return {
@@ -854,9 +857,12 @@ class Geoportal {
     layer._layerConf = layerConf;
     layer._feature = feature;
     if (layer.setStyle && layerConf.geomType !== "point") {
+      const isLimite = layerConf.id === "limite_municipal";
       layer.setStyle({
         weight: (layerConf.userStyle?.weight || layerConf.style?.weight || 2) + 2.5,
-        color: "#f59e0b"
+        color: isLimite ? "#b91c1c" : "#f59e0b",
+        fill: isLimite ? false : undefined,
+        fillOpacity: isLimite ? 0 : undefined
       });
       if (layer.bringToFront) layer.bringToFront();
     }
@@ -881,11 +887,24 @@ class Geoportal {
       },
       mouseover: () => {
         if (layer.setStyle && typeof layer.setStyle === "function" && layerConf.geomType !== "point") {
-          layer.setStyle({
-            weight: (layerConf.userStyle?.weight || layerConf.style?.weight || 1.5) + 2,
-            color: "#f59e0b",
-            fillOpacity: Math.min(1, (layerConf.userStyle?.fillOpacity ?? layerConf.style?.fillOpacity ?? 0.5) + 0.25)
-          });
+          if (layerConf.id === "limite_municipal") {
+            // Limite de Teófilo Otoni: Apenas contorno visível, SEM preenchimento avermelhado!
+            layer.setStyle({
+              weight: (layerConf.userStyle?.weight || layerConf.style?.weight || 3.5) + 1.5,
+              color: "#991b1b",
+              fill: false,
+              fillColor: "transparent",
+              fillOpacity: 0
+            });
+          } else {
+            const hasFill = layerConf.style?.fill !== false && (layerConf.style?.fillOpacity ?? 0) > 0;
+            layer.setStyle({
+              weight: (layerConf.userStyle?.weight || layerConf.style?.weight || 1.5) + 2,
+              color: "#f59e0b",
+              fill: hasFill,
+              fillOpacity: hasFill ? Math.min(1, (layerConf.userStyle?.fillOpacity ?? layerConf.style?.fillOpacity ?? 0.5) + 0.25) : 0
+            });
+          }
         }
       },
       mouseout: () => {
@@ -912,7 +931,11 @@ class Geoportal {
     }
     if (layerConf.id === "pedologia" && feature.properties) {
       const p = feature.properties;
-      return `Solo: ${p.ordem || p.legenda || "Classe de Solo"}`;
+      return `Solo: ${p.legenda_2 || p.ordem || p.legenda || "Classe de Solo"}`;
+    }
+    if (layerConf.id === "relevo" && feature.properties) {
+      const p = feature.properties;
+      return `Relevo: ${p.Compartime || "Macrocompartimento"}`;
     }
     if ((layerConf.id === "risco_geologico" || layerConf.id === "risco_geologico2") && feature.properties) {
       const p = feature.properties;
