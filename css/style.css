@@ -1181,6 +1181,62 @@ body {
   color: #1e293b;
 }
 
+/* ==========================================================================
+   CUSTOMIZAÇÃO DA ESCALA GRÁFICA CARTOGRÁFICA (CANTO INFERIOR ESQUERDO)
+   ========================================================================== */
+.leaflet-bottom.leaflet-left .leaflet-control-scale,
+.leaflet-control-scale {
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(8px);
+  border: 1.5px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+  padding: 6px 12px 6px 12px !important;
+  margin-bottom: 34px !important; /* Posicionado perfeitamente sobre a barra HUD de status */
+  margin-left: 14px !important;
+  z-index: 750 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+}
+
+.leaflet-control-scale::before {
+  content: "ESCALA GRÁFICA";
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #047857;
+  margin-bottom: 4px;
+  font-family: var(--font-family);
+  text-align: center;
+}
+
+.leaflet-control-scale-line {
+  border: 2px solid #0f172a !important;
+  border-top: none !important;
+  line-height: 1.25 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.74rem !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  background: repeating-linear-gradient(
+    to right,
+    #0f172a 0px,
+    #0f172a 12px,
+    #ffffff 12px,
+    #ffffff 24px
+  ) bottom / 100% 4px no-repeat,
+  rgba(255, 255, 255, 0.95) !important;
+  text-align: center !important;
+  padding: 3px 8px 6px 8px !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
 /* Caixa de Seletor de Basemap Flutuante */
 .basemap-panel {
   position: absolute;
@@ -2090,6 +2146,13 @@ body {
     margin-right: 6px !important;
     padding: 6px 10px !important;
     font-size: 0.75rem !important;
+  }
+
+  .leaflet-bottom.leaflet-left .leaflet-control-scale,
+  .leaflet-control-scale {
+    margin-bottom: 28px !important;
+    margin-left: 6px !important;
+    padding: 4px 8px !important;
   }
 
   .map-status-hud {

@@ -223,7 +223,7 @@ class Geoportal {
       if (catLayers.length === 0) return;
 
       const groupEl = document.createElement("div");
-      groupEl.className = "category-group open";
+      groupEl.className = "category-group"; // Recolhida por padrão na inicialização do WebGIS
       groupEl.id = `cat-group-${cat.id}`;
 
       const headerEl = document.createElement("div");
@@ -302,7 +302,7 @@ class Geoportal {
     // Botão para Expandir / Recolher Todas as Categorias
     const btnToggleAllCats = document.getElementById("btn-toggle-all-cats");
     if (btnToggleAllCats) {
-      let allCatsOpen = true;
+      let allCatsOpen = false; // Como padrão, todas as categorias iniciam recolhidas
       btnToggleAllCats.addEventListener("click", () => {
         allCatsOpen = !allCatsOpen;
         document.querySelectorAll(".category-group").forEach((grp) => {
@@ -349,9 +349,25 @@ class Geoportal {
     if (filterInput) {
       filterInput.addEventListener("input", (e) => {
         const query = e.target.value.toLowerCase().trim();
-        document.querySelectorAll(".layer-item").forEach((item) => {
-          const name = item.dataset.layerName.toLowerCase();
-          item.style.display = name.includes(query) ? "flex" : "none";
+        document.querySelectorAll(".category-group").forEach((group) => {
+          let hasVisible = false;
+          group.querySelectorAll(".layer-item").forEach((item) => {
+            const name = (item.dataset.layerName || "").toLowerCase();
+            const match = !query || name.includes(query);
+            item.style.display = match ? "flex" : "none";
+            if (match) hasVisible = true;
+          });
+          if (query) {
+            if (hasVisible) {
+              group.style.display = "block";
+              group.classList.add("open"); // Expande grupo que contém a camada pesquisada
+            } else {
+              group.style.display = "none";
+            }
+          } else {
+            group.style.display = "block";
+            group.classList.remove("open"); // Volta ao padrão recolhido quando limpa a busca
+          }
         });
       });
     }
